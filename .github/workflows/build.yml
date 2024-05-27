@@ -62,8 +62,8 @@ jobs:
             - name: <Setup> template
               shell: pwsh
               run: |
-                .\plugin-template\create-project.ps1 -ProjectDirectory test-plugin -PluginId 00000000-0000-0000-0000-000000000000 -PluginName Test.Plugin -DefaultNamespace Test.Plugin
-                cd test-plugin
+                .\plugin-template\create-project.ps1 -ProjectDirectory \test-plugin -PluginId 00000000-0000-0000-0000-000000000000 -PluginName Test.Plugin -DefaultNamespace Test.Plugin
+                cd \test-plugin
                 ls
 
 
