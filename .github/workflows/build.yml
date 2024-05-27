@@ -74,17 +74,12 @@ jobs:
                 cd \test-plugin
                 ls
 
+            - name: <Checkout> Repository
+              uses: actions/checkout@v4
+
             - name: <Setup> template
               shell: bash
               run: |
-                pwd
-                git rm -r Pe
-
-            - name: <Setup> template2
-              shell: bash
-              run: |
-                git config --remove-section submodule.Pe
-                rm .github/workflows/build.yml
                 rsync -ahvn /test-plugin/* . --exclude '.git/'
                 git checkout -b TEST
                 git add *
