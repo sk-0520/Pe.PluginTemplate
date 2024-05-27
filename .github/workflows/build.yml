@@ -1,40 +1,52 @@
 name: Build CI/CD
 on:
-  push:
-  workflow_dispatch:
+    push:
+    workflow_dispatch:
 
 jobs:
-  create-template:
-    name: "create template"
-    runs-on: windows-latest
+    create-template:
+        name: "create template"
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: <Checkout> Repository
-        uses: actions/checkout@v4
-        with:
-            submodules: 'true'
+        steps:
+            - name: <Checkout> Repository
+              uses: actions/checkout@v4
+              with:
+                submodules: 'true'
 
-      - name: <Add> Node/NPM
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: Pe/.node-version
-  
-      - name: <Setup> NPM
-        shell: bash
-        run: |
-          cd Pe
-          npm ci
-  
-      - name: <Build> template
-        shell: bash
-        run: |
-          cd Pe
-          npm run archive:plugin-template
-  
-      - name: <Artifact> template
-        uses: actions/upload-artifact@v4
-        with:
-          name: Help
-          path: Pe/Source/Help/archives/plugin-template.zip
-          if-no-files-found: error
+            - name: <Add> Node/NPM
+              uses: actions/setup-node@v4
+              with:
+                node-version-file: Pe/.node-version
+    
+            - name: <Setup> NPM
+              shell: bash
+              run: |
+                cd Pe
+                npm ci
+    
+            - name: <Build> template
+              shell: bash
+              run: |
+                cd Pe
+                npm run archive:plugin-template
+    
+            - name: <Artifact> template
+              uses: actions/upload-artifact@v4
+              with:
+                name: plugin-template
+                path: Pe/Source/Help/archives/plugin-template.zip
+                if-no-files-found: error
 
+    test-template:
+        name: "test template"
+        needs:
+            - create-template
+        runs-on: windows-latest
+
+        steps:
+            - name: <Download> template
+              uses: actions/download-artifact@v4
+              with:
+                name: plugin-template
+                path: artifacts/plugin-template
