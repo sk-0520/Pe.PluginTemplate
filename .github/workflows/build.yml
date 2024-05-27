@@ -35,6 +35,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Help
-          path: Source/Help/archives/plugin-template.zip
+          path: Pe/Source/Help/archives/plugin-template.zip
           if-no-files-found: error
 
