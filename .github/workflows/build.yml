@@ -78,11 +78,11 @@ jobs:
               shell: bash
               run: |
                 git rm -r Pe
-                git config --remove-section submodule.Pe
 
             - name: <Setup> template2
               shell: bash
               run: |
+                git config --remove-section submodule.Pe
                 rm .github/workflows/build.yml
                 rsync -ahvn /test-plugin/* . --exclude '.git/'
                 git checkout -b TEST
