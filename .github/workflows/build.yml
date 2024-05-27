@@ -9,28 +9,33 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: <Add> Node/NPM
-      uses: actions/setup-node@v4
-      with:
-        node-version-file: ./Pe/.node-version
-        cache: npm
+      - name: <Checkout> Repository
+        uses: actions/checkout@v4
+        with:
+            submodules: 'true'
 
-    - name: <Setup> NPM
-      shell: bash
-      run: |
-        cd Pe
-        npm ci
-
-    - name: <Build> template
-      shell: bash
-      run: |
-        cd Pe
-        npm run archive:plugin-template
-
-    - name: <Artifact> template
-      uses: actions/upload-artifact@v4
-      with:
-        name: Help
-        path: Source/Help/archives/plugin-template.zip
-        if-no-files-found: error
+      - name: <Add> Node/NPM
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ./Pe/.node-version
+          cache: npm
+  
+      - name: <Setup> NPM
+        shell: bash
+        run: |
+          cd Pe
+          npm ci
+  
+      - name: <Build> template
+        shell: bash
+        run: |
+          cd Pe
+          npm run archive:plugin-template
+  
+      - name: <Artifact> template
+        uses: actions/upload-artifact@v4
+        with:
+          name: Help
+          path: Source/Help/archives/plugin-template.zip
+          if-no-files-found: error
 
