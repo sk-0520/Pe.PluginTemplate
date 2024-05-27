@@ -77,6 +77,7 @@ jobs:
             - name: <Setup> template
               shell: bash
               run: |
+                pwd
                 git rm -r Pe
 
             - name: <Setup> template2
