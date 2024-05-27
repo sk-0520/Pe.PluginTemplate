@@ -1,0 +1,36 @@
+name: Build CI/CD
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  create-template:
+    name: "create template"
+    runs-on: windows-latest
+
+    steps:
+    - name: <Add> Node/NPM
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: ./Pe/.node-version
+        cache: npm
+
+    - name: <Setup> NPM
+      shell: bash
+      run: |
+        cd Pe
+        npm ci
+
+    - name: <Build> template
+      shell: bash
+      run: |
+        cd Pe
+        npm run archive:plugin-template
+
+    - name: <Artifact> template
+      uses: actions/upload-artifact@v4
+      with:
+        name: Help
+        path: Source/Help/archives/plugin-template.zip
+        if-no-files-found: error
+
