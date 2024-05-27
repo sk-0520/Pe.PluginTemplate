@@ -17,7 +17,7 @@ jobs:
       - name: <Add> Node/NPM
         uses: actions/setup-node@v4
         with:
-          node-version-file: ./Pe/.node-version
+          node-version-file: Pe/.node-version
           cache: npm
   
       - name: <Setup> NPM
