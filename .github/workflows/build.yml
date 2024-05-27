@@ -54,5 +54,6 @@ jobs:
             - name: files
               shell: pwsh
               run: |
-                cd artifacts/plugin-template
+                Expand-Archive -Path artifacts/plugin-template/plugin-template.zip -DestinationPath plugin-template
+                cd plugin-template
                 ls
