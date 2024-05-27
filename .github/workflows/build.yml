@@ -74,12 +74,17 @@ jobs:
                 cd \test-plugin
                 ls
 
-            - name: <Checkout> Repository
-              uses: actions/checkout@v4
-
             - name: <Setup> template
               shell: bash
               run: |
+                git rm -r Pe
+                git config --remove-section submodule.Pe
+                Remove-Item -Path .github\workflows\build.yml
+
+            - name: <Setup> template2
+              shell: pwsh
+              run: |
+                Copy-Item -Path \test-plugin -Destination . -Exclude .git
                 rsync -ahvn /test-plugin/* . --exclude '.git/'
                 git checkout -b TEST
                 git add *
