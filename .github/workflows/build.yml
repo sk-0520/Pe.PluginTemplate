@@ -50,3 +50,9 @@ jobs:
               with:
                 name: plugin-template
                 path: artifacts/plugin-template
+
+            - name: files
+              shell: pwsh
+              run: |
+                cd artifacts/plugin-template
+                ls
