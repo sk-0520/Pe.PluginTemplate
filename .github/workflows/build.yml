@@ -60,6 +60,9 @@ jobs:
                 git config --global user.email ${{ github.actor }}@users.noreply.github.com
                 git config --global user.name "${{ github.actor }}"
 
+            - name: <Checkout> Repository
+              uses: actions/checkout@v4
+
             - name: <Download> template
               uses: actions/download-artifact@v4
               with:
@@ -95,6 +98,6 @@ jobs:
                 git checkout -b TEST
                 git add *
                 git commit -m "TEST"
-                git push
+                #git push
 
 
