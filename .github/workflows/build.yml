@@ -91,13 +91,12 @@ jobs:
             - name: <Setup> template2
               shell: pwsh
               run: |
-                Copy-Item -Path \test-plugin\* -Destination . -Recurse -Force -Exclude .git
+                Copy-Item -Path \test-plugin\* -Destination . -Recurse -Force -Exclude @(.git,Source\Pe)
                 git rm -r .github/workflows/build.yml
-                git rm -r Pe
-                git config --remove-section submodule.Pe
                 git checkout -b TEST
                 git add *
                 git commit -m "TEST"
                 #git push
+                ls
 
 
