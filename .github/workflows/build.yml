@@ -77,6 +77,8 @@ jobs:
             - name: <Setup> template
               shell: pwsh
               run: |
+                pwd
+                ls
                 Remove-Item -Path .github\workflows\build.yml
 
             - name: <Setup> template2
