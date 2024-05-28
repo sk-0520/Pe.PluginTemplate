@@ -91,7 +91,7 @@ jobs:
             - name: <Setup> template2
               shell: pwsh
               run: |
-                Copy-Item -Path \test-plugin\* -Destination . -Recurse -Force -Exclude @(.git,Source\Pe)
+                Copy-Item -Path \test-plugin\* -Destination . -Recurse -Force -Exclude @('.git','Source\Pe')
                 git rm -r .github/workflows/build.yml
                 git checkout -b TEST
                 git add *
