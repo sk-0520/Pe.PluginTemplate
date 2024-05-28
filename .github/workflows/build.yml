@@ -78,13 +78,14 @@ jobs:
               run: |
                 pwd
                 ls
-                Remove-Item -Path .github\workflows\build.yml
 
             - name: <Setup> template2
               shell: pwsh
               run: |
                 Copy-Item -Path \test-plugin -Destination . -Exclude .git
-                rsync -ahvn /test-plugin/* . --exclude '.git/'
+                git rm -r .github/workflows/build.yml
+                git rm -r Pe
+                git config --remove-section submodule.Pe
                 git checkout -b TEST
                 git add *
                 git commit -m "TEST"
