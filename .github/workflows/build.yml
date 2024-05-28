@@ -16,6 +16,11 @@ jobs:
               with:
                 repository: sk-0520/Pe
                 ref: refs/heads/master
+                path: Pe
+
+            - name: <Setup> NPM
+              shell: bash
+              run: ls
 
             - name: <Add> Node/NPM
               uses: actions/setup-node@v4
