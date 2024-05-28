@@ -75,9 +75,8 @@ jobs:
                 ls
 
             - name: <Setup> template
-              shell: bash
+              shell: pwsh
               run: |
-                git config --remove-section submodule.Pe
                 Remove-Item -Path .github\workflows\build.yml
 
             - name: <Setup> template2
