@@ -91,7 +91,7 @@ jobs:
             - name: <Setup> template2
               shell: pwsh
               run: |
-                Copy-Item -Path \test-plugin -Destination . -Exclude .git
+                Copy-Item -Path \test-plugin\* -Destination . -Recurse -Exclude .git
                 git rm -r .github/workflows/build.yml
                 git rm -r Pe
                 git config --remove-section submodule.Pe
