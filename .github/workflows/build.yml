@@ -14,7 +14,8 @@ jobs:
             - name: <Checkout> Repository
               uses: actions/checkout@v4
               with:
-                submodules: 'true'
+                repository: sk-0520/Pe
+                ref: refs/heads/master
 
             - name: <Add> Node/NPM
               uses: actions/setup-node@v4
