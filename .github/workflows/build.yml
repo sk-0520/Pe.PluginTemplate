@@ -93,7 +93,7 @@ jobs:
                 $uri = "https://github.com/${{ env.REPOSITORY_OWNER }}/${{ env.REPOSITORY_NAME }}.git"
                 Set-Location -Path \test-plugin
                 git checkout -b "TEST-$((Get-Date).ToString('yyyy-MM-dd_HH-mm-ss'))"
-                git commit -m "action: ${{ github.actor_id }}"
+                git commit --allow-empty -m "action: ${{ github.actor_id }}"
                 #git push
                 ls
 
