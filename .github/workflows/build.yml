@@ -91,9 +91,9 @@ jobs:
               shell: pwsh
               run: |
                 Set-Location -Path \test-plugin
+                git remote set-url origin ${{ github.repositoryUrl }}
                 git checkout -b "TEST-$((Get-Date).ToString('yyyy-MM-dd_HH-mm-ss'))"
                 git commit --allow-empty -m "action: ${{ github.actor_id }}"
-                ls
                 git push
 
             - name: <Artifact> template
