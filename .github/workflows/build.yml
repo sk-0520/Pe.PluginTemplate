@@ -5,6 +5,11 @@ on:
         - TEST
     workflow_dispatch:
 
+env:
+  REPOSITORY_OWNER: sk-0520
+  REPOSITORY_NAME: Pe
+  REPOSITORY_BRUNCH: master
+
 jobs:
     create-template:
         name: "create template"
@@ -14,8 +19,8 @@ jobs:
             - name: <Checkout> Repository
               uses: actions/checkout@v4
               with:
-                repository: sk-0520/Pe
-                ref: refs/heads/master
+                repository: ${{ env.REPOSITORY_OWNER }}/${{ env.REPOSITORY_NAME }}
+                ref: refs/heads/${{ env.REPOSITORY_BRUNCH }}
                 path: Pe
 
             - name: <Setup> NPM
@@ -85,11 +90,14 @@ jobs:
             - name: <Setup> template
               shell: pwsh
               run: |
+                $uri = "https://github.com/${{ env.REPOSITORY_OWNER }}/${{ env.REPOSITORY_NAME }}.git"
                 git checkout -b TEST
                 git rm -r .github/workflows/build.yml
-                Copy-Item -Path \test-plugin\* -Destination . -Recurse -Force -Exclude @('.git','Pe')
+                Remove-Item -Path \test-plugin\Source\Pe -Recurse
+                Copy-Item -Path \test-plugin\* -Destination . -Recurse -Force -Exclude '.git'
+                git submodule add --branch ${{ env.REPOSITORY_BRUNCH }} $uri 'Source/Pe'
                 git add *
-                git commit -m "TEST"
+                git commit -m "action: ${{ github.actor_id }}"
                 #git push
                 ls
 
