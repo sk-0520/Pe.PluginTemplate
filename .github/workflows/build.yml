@@ -85,15 +85,9 @@ jobs:
             - name: <Setup> template
               shell: pwsh
               run: |
-                pwd
-                ls
-
-            - name: <Setup> template2
-              shell: pwsh
-              run: |
-                Copy-Item -Path \test-plugin\* -Destination . -Recurse -Force -Exclude @('.git','Source\Pe')
-                git rm -r .github/workflows/build.yml
                 git checkout -b TEST
+                git rm -r .github/workflows/build.yml
+                Copy-Item -Path \test-plugin\* -Destination . -Recurse -Force -Exclude @('.git','Source\Pe')
                 git add *
                 git commit -m "TEST"
                 #git push
