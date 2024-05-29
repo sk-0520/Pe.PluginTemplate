@@ -6,9 +6,9 @@ on:
     workflow_dispatch:
 
 env:
-  REPOSITORY_OWNER: sk-0520
-  REPOSITORY_NAME: Pe
-  REPOSITORY_BRUNCH: master
+  PE_REPOSITORY_OWNER: sk-0520
+  PE_REPOSITORY_NAME: Pe
+  PE_REPOSITORY_BRUNCH: master
 
 jobs:
     create-template:
@@ -19,8 +19,8 @@ jobs:
             - name: <Checkout> Repository
               uses: actions/checkout@v4
               with:
-                repository: ${{ env.REPOSITORY_OWNER }}/${{ env.REPOSITORY_NAME }}
-                ref: refs/heads/${{ env.REPOSITORY_BRUNCH }}
+                repository: ${{ env.PE_REPOSITORY_OWNER }}/${{ env.PE_REPOSITORY_NAME }}
+                ref: refs/heads/${{ env.PE_REPOSITORY_BRUNCH }}
                 path: Pe
 
             - name: <Setup> NPM
@@ -90,12 +90,11 @@ jobs:
             - name: <Setup> template
               shell: pwsh
               run: |
-                $uri = "https://github.com/${{ env.REPOSITORY_OWNER }}/${{ env.REPOSITORY_NAME }}.git"
                 Set-Location -Path \test-plugin
                 git checkout -b "TEST-$((Get-Date).ToString('yyyy-MM-dd_HH-mm-ss'))"
                 git commit --allow-empty -m "action: ${{ github.actor_id }}"
-                #git push
                 ls
+                git push
 
             - name: <Artifact> template
               uses: actions/upload-artifact@v4
