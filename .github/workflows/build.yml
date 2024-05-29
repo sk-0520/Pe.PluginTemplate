@@ -78,23 +78,22 @@ jobs:
               shell: pwsh
               run: |
                 Expand-Archive -Path artifacts/plugin-template/plugin-template.zip -DestinationPath plugin-template
-                cd plugin-template
-                ls
+                Get-ChildItem -LiteralPath plugin-template
 
             - name: <Initialize> template
               shell: pwsh
               run: |
                 .\plugin-template\create-project.ps1 -ProjectDirectory \test-plugin -PluginId 00000000-0000-0000-0000-000000000000 -PluginName Test.Plugin -DefaultNamespace Test.Plugin
-                ls \test-plugin
+                Get-ChildItem -LiteralPath \test-plugin
 
             - name: <Setup> template
               shell: pwsh
               run: |
                 Set-Location -Path \test-plugin
-                git remote set-url origin ${{ github.repositoryUrl }}
+                git remote add origin git@github.com:${{ github.repository }}.git
                 git checkout -b "TEST-$((Get-Date).ToString('yyyy-MM-dd_HH-mm-ss'))"
                 git commit --allow-empty -m "action: ${{ github.actor_id }}"
-                git push
+                git push origin
 
             - name: <Artifact> template
               uses: actions/upload-artifact@v4
