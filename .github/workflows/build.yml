@@ -6,9 +6,9 @@ on:
     workflow_dispatch:
 
 env:
-  PE_REPOSITORY_OWNER: sk-0520
-  PE_REPOSITORY_NAME: Pe
-  PE_REPOSITORY_BRUNCH: master
+    PE_REPOSITORY_OWNER: sk-0520
+    PE_REPOSITORY_NAME: Pe
+    PE_REPOSITORY_BRUNCH: master
 
 jobs:
     create-template:
@@ -87,6 +87,8 @@ jobs:
                 Get-ChildItem -LiteralPath \test-plugin
 
             - name: <Setup> template
+              env:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               shell: pwsh
               run: |
                 Set-Location -Path \test-plugin
