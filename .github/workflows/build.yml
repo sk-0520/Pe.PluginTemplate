@@ -91,12 +91,8 @@ jobs:
               shell: pwsh
               run: |
                 $uri = "https://github.com/${{ env.REPOSITORY_OWNER }}/${{ env.REPOSITORY_NAME }}.git"
-                git checkout -b TEST
-                git rm -r .github/workflows/build.yml
-                Remove-Item -Path \test-plugin\Source\Pe -Recurse
-                Copy-Item -Path \test-plugin\* -Destination . -Recurse -Force -Exclude '.git'
-                git submodule add --branch ${{ env.REPOSITORY_BRUNCH }} $uri 'Source/Pe'
-                git add *
+                Set-Location -Path \test-plugin
+                git checkout -b "TEST-$(Get-Date -Format 'o')"
                 git commit -m "action: ${{ github.actor_id }}"
                 #git push
                 ls
