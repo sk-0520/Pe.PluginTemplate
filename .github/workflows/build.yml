@@ -10,6 +10,11 @@ env:
     PE_REPOSITORY_NAME: Pe
     PE_REPOSITORY_BRUNCH: master
 
+permissions:
+    contents: write
+    pull-requests: write
+
+
 jobs:
     create-template:
         name: "create template"
@@ -87,8 +92,6 @@ jobs:
                 Get-ChildItem -LiteralPath \test-plugin
 
             - name: <Setup> template
-              env:
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               shell: pwsh
               run: |
                 Set-Location -Path \test-plugin
