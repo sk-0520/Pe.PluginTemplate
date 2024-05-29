@@ -90,10 +90,11 @@ jobs:
               shell: pwsh
               run: |
                 Set-Location -Path \test-plugin
+                $brunchName = "TEST-$((Get-Date).ToString('yyyy-MM-dd_HH-mm-ss'))"
                 git remote add origin git@github.com:${{ github.repository }}.git
-                git checkout -b "TEST-$((Get-Date).ToString('yyyy-MM-dd_HH-mm-ss'))"
+                git checkout -b "${brunchName}"
                 git commit --allow-empty -m "action: ${{ github.actor_id }}"
-                git push origin
+                git push --set-upstream origin "${brunchName}"
 
             - name: <Artifact> template
               uses: actions/upload-artifact@v4
