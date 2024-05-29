@@ -87,7 +87,7 @@ jobs:
               run: |
                 git checkout -b TEST
                 git rm -r .github/workflows/build.yml
-                Copy-Item -Path \test-plugin\* -Destination . -Recurse -Force -Exclude @('.git','Source\Pe')
+                Copy-Item -Path \test-plugin\* -Destination . -Recurse -Force -Exclude @('.git','Pe')
                 git add *
                 git commit -m "TEST"
                 #git push
