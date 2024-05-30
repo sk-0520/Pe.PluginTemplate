@@ -1,9 +1,14 @@
-name: Build CI/CD
+name: Setup Template
 on:
     push:
       branches-ignore:
         - ci-test
     workflow_dispatch:
+      inputs:
+        PE_REVISION:
+          type: string
+          required: true
+          description: 'Pe SHA1'
 
 env:
     PE_REPOSITORY_OWNER: sk-0520
