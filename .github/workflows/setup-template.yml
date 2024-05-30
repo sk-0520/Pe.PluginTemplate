@@ -111,6 +111,7 @@ jobs:
                   Push-Location -LiteralPath "Source\Pe"
                     git checkout "${{ inputs.PE_REVISION }}"
                   Pop-Location
+                  git add
                 }
                 git commit --allow-empty -m "action: ${{ github.actor_id }}"
                 git push --set-upstream origin "${brunchName}"
