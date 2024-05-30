@@ -10,10 +10,17 @@ on:
           required: true
           description: 'Pe SHA1'
 
+
+concurrency:
+    group: ${{ github.ref }}
+    cancel-in-progress: true
+
+
 env:
     PE_REPOSITORY_OWNER: sk-0520
     PE_REPOSITORY_NAME: Pe
     PE_REPOSITORY_BRUNCH: master
+
 
 permissions:
     contents: write
@@ -41,19 +48,19 @@ jobs:
               uses: actions/setup-node@v4
               with:
                 node-version-file: Pe/.node-version
-    
+
             - name: <Setup> NPM
               shell: bash
               run: |
                 cd Pe
                 npm ci
-    
+
             - name: <Build> template
               shell: bash
               run: |
                 cd Pe
                 npm run archive:plugin-template
-    
+
             - name: <Artifact> template
               uses: actions/upload-artifact@v4
               with:
@@ -121,4 +128,3 @@ jobs:
               with:
                 name: plugin-test
                 path: /test-plugin/**/*
-                
