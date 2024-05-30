@@ -106,6 +106,12 @@ jobs:
                 git remote add origin https://${{ github.actor }}:github.com/${{ github.repository }}.git
                 git remote set-url --push origin https://${{ github.actor }}:${{ env.WORKFLOW_TOKEN }}@github.com/${{ github.repository }}.git
                 git checkout -b "${brunchName}"
+                if("${{ inputs.PE_REVISION }}") {
+                  "${{ inputs.PE_REVISION }}"
+                  Push-Location -LiteralPath "Source\Pe"
+                    git checkout "${{ inputs.PE_REVISION }}"
+                  Pop-Location
+                }
                 git commit --allow-empty -m "action: ${{ github.actor_id }}"
                 git push --set-upstream origin "${brunchName}"
 
