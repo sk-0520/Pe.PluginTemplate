@@ -98,7 +98,6 @@ jobs:
               run: |
                 Set-Location -Path \test-plugin
                 $brunchName = "Pe.PluginTemplate-CI-TEST-$((Get-Date).ToString('yyyy-MM-dd_HH-mm-ss'))"
-                git remote add origin https://${{ github.actor }}:github.com/${{ github.repository }}.git
                 git remote set-url --push origin https://${{ github.actor }}:${{ env.WORKFLOW_TOKEN }}@github.com/${{ github.repository }}.git
                 git checkout -b "${brunchName}"
                 git commit --allow-empty -m "action: ${{ github.actor_id }}"
