@@ -118,8 +118,8 @@ jobs:
                   Push-Location -LiteralPath "Source\Pe"
                     git checkout "${{ inputs.PE_REVISION }}"
                   Pop-Location
-                  git add
                 }
+                git add .
                 git commit -m "action: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                 git push --force --set-upstream origin "${brunchName}"
 
