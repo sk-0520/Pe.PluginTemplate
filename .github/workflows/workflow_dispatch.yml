@@ -16,8 +16,8 @@ concurrency:
     cancel-in-progress: true
 
 jobs:
-    push:
-        name: use
+    job:
+        name: workflow_dispatch
         uses: ./.github/workflows/_setup-template.yml
         with:
             PE_REVISION: ${{ inputs.PE_REVISION }}
