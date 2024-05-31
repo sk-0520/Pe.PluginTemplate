@@ -1,0 +1,20 @@
+name: repository_dispatch
+on:
+    repository_dispatch:
+        types: [invoke-plugin-template]
+
+permissions:
+    contents: write
+    pull-requests: write
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    push:
+        name: use
+        uses: ./.github/workflows/_setup-template.yml
+        with:
+            PE_REVISION: '${{ github.event.client_payload.PE_REVISION }}'
+

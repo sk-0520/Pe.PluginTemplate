@@ -1,3 +1,5 @@
+name: Setup plugin template
+
 on:
     workflow_call:
       inputs:
