@@ -7,10 +7,6 @@ on:
             type: string
             default:
 
-permissions:
-    contents: write
-    pull-requests: write
-
 concurrency:
     group: ${{ github.ref }}
     cancel-in-progress: true
