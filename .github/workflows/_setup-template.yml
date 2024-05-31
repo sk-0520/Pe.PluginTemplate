@@ -111,7 +111,7 @@ jobs:
                     Pop-Location
                     git add .
                 }
-                git commit -m "action: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                git commit --allow-empty -m "action: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                 git push --force --set-upstream origin "${brunchName}"
 
             - name: <Artifact> template
