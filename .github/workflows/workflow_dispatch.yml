@@ -16,5 +16,5 @@ jobs:
         name: use
         uses: ./.github/workflows/_setup-template.yml
         with:
-            PE_REVISION: ''
+            PE_REVISION: ${{ inputs.PE_REVISION }}
 
