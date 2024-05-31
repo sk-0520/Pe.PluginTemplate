@@ -1,4 +1,4 @@
-name: Setup Template
+name: push
 on:
     push:
       branches-ignore:

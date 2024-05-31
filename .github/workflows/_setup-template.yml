@@ -3,8 +3,7 @@ on:
       inputs:
         PE_REVISION:
             type: string
-            required: true
-            description: 'Pe SHA1'
+            default:
 
 concurrency:
     group: ${{ github.ref }}

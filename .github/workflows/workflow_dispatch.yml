@@ -1,0 +1,20 @@
+name: workflow_dispatch
+on:
+    workflow_dispatch:
+      inputs:
+        PE_REVISION:
+          type: string
+          required: true
+          description: 'Pe SHA1'
+
+concurrency:
+    group: ${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    push:
+        name: use
+        uses: ./.github/workflows/_setup-template.yml
+        with:
+            PE_REVISION: ''
+
