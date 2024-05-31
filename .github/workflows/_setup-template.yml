@@ -102,7 +102,7 @@ jobs:
                 Set-Location -Path \test-plugin
                 $brunchName = "ci-test"
                 git remote add origin https://${{ github.actor }}:github.com/${{ github.repository }}.git
-                git remote set-url --push origin https://${{ github.actor }}:${{ secrets.WORKFLOW_TOKEN }}@github.com/${{ github.repository }}.git
+                git remote set-url --push origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
                 git checkout -b "${brunchName}"
                 "PE_REVISION: ${{ inputs.PE_REVISION }}"
                 "github.actor: ${{ github.actor }}"
