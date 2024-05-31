@@ -1,15 +1,10 @@
-name: Setup Template
 on:
-    push:
-      branches-ignore:
-        - ci-test
-    workflow_dispatch:
+    workflow_call:
       inputs:
         PE_REVISION:
-          type: string
-          required: true
-          description: 'Pe SHA1'
-
+            type: string
+            required: true
+            description: 'Pe SHA1'
 
 concurrency:
     group: ${{ github.ref }}
