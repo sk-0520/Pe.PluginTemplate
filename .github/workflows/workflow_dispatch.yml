@@ -1,11 +1,11 @@
 name: workflow_dispatch
 on:
     workflow_dispatch:
-      inputs:
-        PE_REVISION:
-          type: string
-          required: true
-          description: 'Pe SHA1'
+        inputs:
+            PE_REVISION:
+                type: string
+                required: true
+                description: 'Pe SHA1'
 
 permissions:
     contents: write

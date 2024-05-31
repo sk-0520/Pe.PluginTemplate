@@ -2,10 +2,10 @@ name: Setup plugin template
 
 on:
     workflow_call:
-      inputs:
-        PE_REVISION:
-            type: string
-            default:
+        inputs:
+            PE_REVISION:
+                type: string
+                default:
 
 concurrency:
     group: ${{ github.ref }}

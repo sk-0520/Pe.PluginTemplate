@@ -1,8 +1,8 @@
 name: push
 on:
     push:
-      branches-ignore:
-        - ci-test
+        branches-ignore:
+            - ci-test
     # workflow_dispatch:
     #   inputs:
     #     PE_REVISION:
