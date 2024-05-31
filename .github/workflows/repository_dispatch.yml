@@ -16,5 +16,5 @@ jobs:
         name: repository_dispatch
         uses: ./.github/workflows/_setup-template.yml
         with:
-            PE_REVISION: '${{ github.event.client_payload.PE_REVISION }}'
+            PE_REVISION: ${{ github.event.client_payload.PE_REVISION }}
 
