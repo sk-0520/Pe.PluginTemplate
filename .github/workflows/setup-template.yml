@@ -99,7 +99,12 @@ jobs:
             - name: <Initialize> template
               shell: pwsh
               run: |
-                .\plugin-template\create-project.ps1 -ProjectDirectory \test-plugin -PluginId 00000000-0000-0000-0000-000000000000 -PluginName Test.Plugin -DefaultNamespace Test.Plugin
+                $revision = ''
+                switch('${{ github.event_name }}') {
+                    'repository_dispatch' { $revision = '${{ github.event.client_payload.PE_REVISION }}' }
+                    'workflow_dispatch'   { $revision = '${{ inputs.PE_REVISION }}' }
+                }
+                .\plugin-template\create-project.ps1 -ProjectDirectory \test-plugin -PluginId 00000000-0000-0000-0000-000000000000 -PluginName Test.Plugin -DefaultNamespace Test.Plugin -AppRevision $revision
                 Get-ChildItem -LiteralPath \test-plugin
 
             - name: <Push> template
@@ -107,11 +112,6 @@ jobs:
                 WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
               shell: pwsh
               run: |
-                $revision = ''
-                switch('${{ github.event_name }}') {
-                    'repository_dispatch' { $revision = '${{ github.event.client_payload.PE_REVISION }}' }
-                    'workflow_dispatch'   { $revision = '${{ inputs.PE_REVISION }}' }
-                }
                 Set-Location -Path \test-plugin
                 $brunchName = "ci-test"
                 git remote add origin https://${{ github.actor }}:github.com/${{ github.repository }}.git
