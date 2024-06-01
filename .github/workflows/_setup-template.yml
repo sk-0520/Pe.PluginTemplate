@@ -7,10 +7,6 @@ on:
                 type: string
                 default:
 
-concurrency:
-    group: ${{ github.ref }}
-    cancel-in-progress: true
-
 env:
     PE_REPOSITORY_OWNER: sk-0520
     PE_REPOSITORY_NAME: Pe
