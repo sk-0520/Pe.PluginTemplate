@@ -102,21 +102,15 @@ jobs:
                 .\plugin-template\create-project.ps1 -ProjectDirectory \test-plugin -PluginId 00000000-0000-0000-0000-000000000000 -PluginName Test.Plugin -DefaultNamespace Test.Plugin
                 Get-ChildItem -LiteralPath \test-plugin
 
-            - name: <Push> template
-              env:
-                WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+            - name: <Checkout> Pe
               shell: pwsh
               run: |
+                Set-Location -Path \test-plugin
                 $revision = ''
                 switch('${{ github.event_name }}') {
                     'repository_dispatch' { $revision = '${{ github.event.client_payload.PE_REVISION }}' }
                     'workflow_dispatch'   { $revision = '${{ inputs.PE_REVISION }}' }
                 }
-                Set-Location -Path \test-plugin
-                $brunchName = "ci-test"
-                git remote add origin https://${{ github.actor }}:github.com/${{ github.repository }}.git
-                git remote set-url --push origin https://${{ github.actor }}:${{ env.WORKFLOW_TOKEN }}@github.com/${{ github.repository }}.git
-                git checkout -b "${brunchName}"
                 if($revision) {
                     "revision: ${revision}"
                     Push-Location -LiteralPath "Source\Pe"
@@ -124,6 +118,18 @@ jobs:
                     Pop-Location
                     git add .
                 }
+
+            - name: <Push> template
+              env:
+                WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+              shell: pwsh
+              run: |
+                Set-Location -Path \test-plugin
+                $brunchName = "ci-test"
+                git remote add origin https://${{ github.actor }}:github.com/${{ github.repository }}.git
+                git remote set-url --push origin https://${{ github.actor }}:${{ env.WORKFLOW_TOKEN }}@github.com/${{ github.repository }}.git
+                git checkout -b "${brunchName}"
+
                 git commit --allow-empty -m "action: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
                 git push --force --set-upstream origin "${brunchName}"
 
