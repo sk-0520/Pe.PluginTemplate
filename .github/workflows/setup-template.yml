@@ -1,11 +1,21 @@
 name: Setup plugin template
 
 on:
-    workflow_call:
+    push:
+        branches-ignore:
+            - ci-test
+    workflow_dispatch:
         inputs:
             PE_REVISION:
                 type: string
-                default:
+                required: true
+                description: 'Pe SHA1'
+    repository_dispatch:
+        types: [invoke-plugin-template]
+
+permissions:
+    contents: write
+    pull-requests: write
 
 env:
     PE_REPOSITORY_OWNER: sk-0520
@@ -53,7 +63,7 @@ jobs:
                 path: Pe/Source/Help/archives/plugin-template.zip
                 if-no-files-found: error
 
-    test-template:
+    setup-template:
         name: "test template"
         needs:
             - create-template
@@ -93,19 +103,20 @@ jobs:
                 WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
               shell: pwsh
               run: |
+                $revision = ''
+                switch('${{ github.event_name }}') {
+                    'repository_dispatch' { $revision = '${{ github.event.client_payload.PE_REVISION }}' }
+                    'workflow_dispatch'   { $revision = '${{ inputs.PE_REVISION }}' }
+                }
                 Set-Location -Path \test-plugin
                 $brunchName = "ci-test"
                 git remote add origin https://${{ github.actor }}:github.com/${{ github.repository }}.git
                 git remote set-url --push origin https://${{ github.actor }}:${{ env.WORKFLOW_TOKEN }}@github.com/${{ github.repository }}.git
                 git checkout -b "${brunchName}"
-                "PE_REVISION: ${{ inputs.PE_REVISION }}"
-                "github.actor: ${{ github.actor }}"
-                "github.repository: ${{ github.repository }}"
-                "github.run_id: ${{ github.run_id }}"
-                if("${{ inputs.PE_REVISION }}") {
-                    "${{ inputs.PE_REVISION }}"
+                if($revision) {
+                    "revision: ${revision}"
                     Push-Location -LiteralPath "Source\Pe"
-                        git checkout "${{ inputs.PE_REVISION }}"
+                        git checkout "${revision}"
                     Pop-Location
                     git add .
                 }
