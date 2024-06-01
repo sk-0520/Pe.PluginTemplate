@@ -73,6 +73,8 @@ jobs:
 
             - name: <Checkout> Repository
               uses: actions/checkout@v4
+              with:
+                token: ${{ secrets.WORKFLOW_TOKEN }}
 
             - name: <Download> template
               uses: actions/download-artifact@v4
@@ -93,14 +95,12 @@ jobs:
                 Get-ChildItem -LiteralPath \test-plugin
 
             - name: <Push> template
-              env:
-                WORKFLOW_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
               shell: pwsh
               run: |
                 Set-Location -Path \test-plugin
                 $brunchName = "ci-test"
                 git remote add origin https://${{ github.actor }}:github.com/${{ github.repository }}.git
-                git remote set-url --push origin https://${{ github.actor }}:${{ secrets.WORKFLOW_TOKEN }}@github.com/${{ github.repository }}.git
+                #git remote set-url --push origin https://${{ github.actor }}:${{ secrets.WORKFLOW_TOKEN }}@github.com/${{ github.repository }}.git
                 git checkout -b "${brunchName}"
                 "PE_REVISION: ${{ inputs.PE_REVISION }}"
                 "github.actor: ${{ github.actor }}"
