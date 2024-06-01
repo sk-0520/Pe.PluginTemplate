@@ -1,16 +1,6 @@
 name: push
 on:
     push:
-        branches-ignore:
-            - ci-test
-    # workflow_dispatch:
-    #   inputs:
-    #     PE_REVISION:
-    #       type: string
-    #       required: true
-    #       description: 'Pe SHA1'
-    # repository_dispatch:
-    #     types: [invoke-plugin-template]
 
 permissions:
     contents: write
