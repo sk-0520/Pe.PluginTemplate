@@ -10,6 +10,10 @@ on:
                 type: string
                 required: true
                 description: 'Pe SHA1'
+            PE_BRUNCH:
+                type: string
+                required: true
+                description: 'Pe branch name'
     repository_dispatch:
         types: [invoke-plugin-template]
 
@@ -100,11 +104,18 @@ jobs:
               shell: pwsh
               run: |
                 $revision = ''
+                $branch = ''
                 switch('${{ github.event_name }}') {
-                    'repository_dispatch' { $revision = '${{ github.event.client_payload.PE_REVISION }}' }
-                    'workflow_dispatch'   { $revision = '${{ inputs.PE_REVISION }}' }
+                    'repository_dispatch' {
+                        $revision = '${{ github.event.client_payload.PE_REVISION }}'
+                        $branch = '${{ github.event.client_payload.PE_BRANCH }}'
+                    }
+                    'workflow_dispatch' {
+                        $revision = '${{ inputs.PE_REVISION }}'
+                        $branch = '${{ inputs.PE_BRUNCH }}'
+                    }
                 }
-                .\plugin-template\create-project.ps1 -ProjectDirectory \test-plugin -PluginId 00000000-0000-0000-0000-000000000000 -PluginName Test.Plugin -DefaultNamespace Test.Plugin -AppRevision $revision
+                .\plugin-template\create-project.ps1 -ProjectDirectory \test-plugin -PluginId 00000000-0000-0000-0000-000000000000 -PluginName Test.Plugin -DefaultNamespace Test.Plugin -AppRevision $revision -AppTargetBranch $branch
                 Get-ChildItem -LiteralPath \test-plugin
 
             - name: <Push> template
