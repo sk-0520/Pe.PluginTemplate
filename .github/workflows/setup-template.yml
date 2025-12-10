@@ -10,7 +10,7 @@ on:
                 type: string
                 required: true
                 description: 'Pe SHA1'
-            PE_BRUNCH:
+            PE_BRANCH:
                 type: string
                 required: true
                 description: 'Pe branch name'
@@ -24,7 +24,7 @@ permissions:
 env:
     PE_REPOSITORY_OWNER: sk-0520
     PE_REPOSITORY_NAME: Pe
-    PE_REPOSITORY_BRUNCH: master
+    PE_REPOSITORY_BRANCH: master
 
 concurrency:
     group: ${{ github.workflow }}-${{ github.ref }}
@@ -34,13 +34,16 @@ jobs:
     create-template:
         name: "create template"
         runs-on: ubuntu-latest
+        env:
+            PE_REF: ${{ github.event.client_payload.PE_BRANCH || github.event.inputs.PE_BRANCH || 'master' }}
+            PE_REV: ${{ github.event.client_payload.PE_REVISION || github.event.inputs.PE_REVISION || '' }}
 
         steps:
             - name: <Checkout> Repository
               uses: actions/checkout@v4
               with:
                 repository: ${{ env.PE_REPOSITORY_OWNER }}/${{ env.PE_REPOSITORY_NAME }}
-                ref: refs/heads/${{ env.PE_REPOSITORY_BRUNCH }}
+                ref: ${{ env.PE_REF }}
                 path: Pe
 
             - name: <Setup> NPM
@@ -111,8 +114,8 @@ jobs:
                         $branch = '${{ github.event.client_payload.PE_BRANCH }}'
                     }
                     'workflow_dispatch' {
-                        $revision = '${{ inputs.PE_REVISION }}'
-                        $branch = '${{ inputs.PE_BRUNCH }}'
+                      $revision = '${{ inputs.PE_REVISION }}'
+                      $branch = '${{ inputs.PE_BRANCH }}'
                     }
                 }
                 .\plugin-template\create-project.ps1 -ProjectDirectory \test-plugin -PluginId 00000000-0000-0000-0000-000000000000 -PluginName Test.Plugin -DefaultNamespace Test.Plugin -AppRevision $revision -AppTargetBranch $branch
