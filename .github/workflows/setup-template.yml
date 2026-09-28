@@ -40,7 +40,7 @@ jobs:
 
         steps:
             - name: <Checkout> Repository
-              uses: actions/checkout@v4
+              uses: actions/checkout@v7
               with:
                 repository: ${{ env.PE_REPOSITORY_OWNER }}/${{ env.PE_REPOSITORY_NAME }}
                 ref: ${{ env.PE_REF }}
@@ -51,7 +51,7 @@ jobs:
               run: ls
 
             - name: <Add> Node/NPM
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v7
               with:
                 node-version-file: Pe/.node-version
 
@@ -68,7 +68,7 @@ jobs:
                 npm run archive:plugin-template
 
             - name: <Artifact> template
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               with:
                 name: plugin-template
                 path: Pe/Source/Help/archives/plugin-template.zip
@@ -89,10 +89,10 @@ jobs:
                 git config --global user.name "${{ github.actor }}"
 
             - name: <Checkout> Repository
-              uses: actions/checkout@v4
+              uses: actions/checkout@v7
 
             - name: <Download> template
-              uses: actions/download-artifact@v4
+              uses: actions/download-artifact@v8
               with:
                 name: plugin-template
                 path: artifacts/plugin-template
@@ -136,7 +136,7 @@ jobs:
                 git push --force --set-upstream origin "${brunchName}"
 
             - name: <Artifact> template
-              uses: actions/upload-artifact@v4
+              uses: actions/upload-artifact@v7
               with:
                 name: plugin-test
                 path: /test-plugin/**/*
