@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>Test.Plugin</RootNamespace>
+    <UseWPF>true</UseWPF>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Pe\Source\Pe\Pe.Embedded\**\*.cs" Exclude="..\Pe\Source\Pe\Pe.Embedded\obj\**\*.cs" />
+    <None Remove="Plugin.ico" />
+    <ProjectReference Include="..\Pe\Source\Pe\Pe.Bridge\Pe.Bridge.csproj">
+      <Private>false</Private>
+      <ExcludeAssets>runtime</ExcludeAssets>
+    </ProjectReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="..\..\Plugin.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="assembly-info.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>
